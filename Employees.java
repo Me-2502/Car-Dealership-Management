@@ -1,17 +1,18 @@
 import java.util.Scanner;
-import java.util.UUID;    
-public class Employees extends Showroom{
-    String emp_id;
-    String emp_name;
-    int emp_age;
-    int salary;
-    String emp_designation;
-    String mail_id = "Not Provided";
-    String phone_number;
-    String emp_department;
+import java.util.UUID;
+
+public class Employees extends Showroom implements utility {
+    private String emp_id;
+    private String emp_name;
+    private int emp_age;
+    private int salary;
+    private String emp_designation;
+    private String mail_id = "Not Provided";
+    private String phone_number;
+    private String emp_department;
 
     @Override
-    protected void get_details() {
+    public void get_details() {
         System.out.println("ID: " + emp_id);
         System.out.println("Name: " + emp_name);
         System.out.println("Age: " + emp_age);
@@ -28,8 +29,8 @@ public class Employees extends Showroom{
     }
 
     @Override
-    public void set_details(){
-        try(Scanner sc = new Scanner(System.in)) {
+    public void set_details( Scanner sc){
+        try {
             UUID uuid = UUID.randomUUID();
             emp_id = String.valueOf(uuid);
             System.out.println("======================= *** ENTER EMPLOYEE DETAILS *** =======================");
@@ -61,9 +62,17 @@ public class Employees extends Showroom{
             else if(!phone_number.matches("\\d{10}"))
                 throw new IllegalArgumentException("Invalid phone number format. Please enter a 10-digit number.");
             else if(phone_number.length() != 10)
-                throw ("Invalid phone number format. Please enter a 10-digit number.");
+                throw new IllegalArgumentException("Phone number must be exactly 10 digits long.");
             System.out.print("EMPLOYEE MAIL ID (optional, press enter to skip): ");
-            String input = sc.nextLine();            
+            String input = sc.nextLine();
+            if(!input.isEmpty()) {
+                if(input.contains("@") && input.contains("."))
+                    mail_id = input;
+                else
+                    throw new IllegalArgumentException("Invalid email format.");
+            }
+            else
+                mail_id = "Not Provided";
         }
         catch(Exception e) {
             System.out.println("An error occurred while setting employee details: " + e.getMessage());
@@ -73,6 +82,7 @@ public class Employees extends Showroom{
     @Override
     public String toString() {
         return "Employee ID: " + emp_id + ", Name: " + emp_name + ", Age: " + emp_age +
-               ", Department: " + emp_department;
+               ", Salary: " + salary + ", Designation: " + emp_designation +
+               ", Phone Number: " + phone_number + ", Department: " + emp_department;
     }
 }
