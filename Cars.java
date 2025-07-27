@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Cars extends Showroom{   //Extend is for inherite the class then implemented utility
+public class Cars extends Showroom implements utility{
     String car_name;
     String car_color;
     int car_price;
@@ -15,7 +15,6 @@ public class Cars extends Showroom{   //Extend is for inherite the class then im
     public void get_details(){
         System.out.println("NAME: " + car_name);
         System.out.println("COLOR: " + car_color);
-        System.out.println("FUEL TYPE: " + car_fuel_type);
         System.out.println("PRICE: " + car_price);
         System.out.println("CAR TYPE: " + car_type);
         System.out.println("TRANSMISSION: " + car_transmission);
@@ -26,8 +25,8 @@ public class Cars extends Showroom{   //Extend is for inherite the class then im
     }
 
     @Override
-    public void set_details(){
-        try(Scanner sc = new Scanner(System.in)) {
+    public void set_details(Scanner sc) {
+        try {
             System.out.println("======================= *** ENTER CAR DETAILS *** =======================");
             System.out.println();
             System.out.print("CAR NAME: ");
@@ -58,6 +57,10 @@ public class Cars extends Showroom{   //Extend is for inherite the class then im
                 String configuration = sc.nextLine();
                 if(configuration.isEmpty())
                     throw new IllegalArgumentException("Engine configuration field cannot be empty.");
+                System.out.print("ENGINE NUMBER: ");
+                String engine_number = sc.nextLine();
+                if(engine_number.isEmpty())
+                    throw new IllegalArgumentException("Engine number field cannot be empty.");
                 System.out.print("POWER(in HP): ");
                 int power = sc.nextInt();
                 if(power < 50)
@@ -68,9 +71,6 @@ public class Cars extends Showroom{   //Extend is for inherite the class then im
                     throw new IllegalArgumentException("Torque cannot be negative.");
                 sc.nextLine(); // Consume newline
                 System.out.print("ENGINE NUMBER: ");
-                String engine_number = sc.nextLine();
-                if(engine_number.isEmpty())
-                    throw new IllegalArgumentException("Engine number field cannot be empty.");
                 System.out.print("FUEL TYPE(PETROL/DIESEL): ");
                 boolean fuel_type = (sc.nextLine() == "PETROL"); // true for petrol, false for diesel
                 engine = new ICE(configuration, power, torque, engine_number, fuel_type);
@@ -104,9 +104,16 @@ public class Cars extends Showroom{   //Extend is for inherite the class then im
             System.out.println("An error occurred while setting car details: " + e.getMessage());
         }
     }
+
+    public String toString() {
+        return "Car Name: " + car_name + ", Color: " + car_color + ", Price: " + car_price +
+               ", Type: " + car_type + ", Transmission: " + car_transmission +
+               ", Powertrain: " + (car_powertrain ? engine.toString() : electric_powertrain.toString() ) +
+               ", Chassis Number: " + chassis_number;
+    }
 }
 
-public class ICE {
+class ICE {
     String configuration;
     int power;
     int torque;
@@ -127,10 +134,16 @@ public class ICE {
         System.out.println("TORQUE: " + torque + " Nm");
         System.out.println("ENGINE NUMBER: " + engine_number);
         System.out.println("FUEL TYPE: " + (fuel_type ? "PETROL" : "DIESEL"));
+        System.out.println("ENGINE NUMBER: " + engine_number);
+    }
+
+    public String toString() {
+        return "Configuration: " + configuration + ", Power: " + power + " HP, Torque: " + torque +
+               " Nm, Engine Number: " + engine_number + ", Fuel Type: " + (fuel_type ? "PETROL" : "DIESEL");
     }
 }
 
-public class EV extends Cars {
+class EV extends Cars {
     int battery_capacity;
     int range;
     String motor_type;
@@ -153,5 +166,10 @@ public class EV extends Cars {
         System.out.println("MOTOR TYPE: " + motor_type);
         System.out.println("POWER: " + power + " HP");
         System.out.println("TORQUE: " + torque + " Nm");
+    }
+
+    public String toString() {
+        return "Battery Capacity: " + battery_capacity + " kWh, Range: " + range + " km, Motor Type: " +
+               motor_type + ", Power: " + power + " HP, Torque: " + torque + " Nm";
     }
 }
