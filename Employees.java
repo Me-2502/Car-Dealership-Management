@@ -4,36 +4,75 @@ public class Employees extends Showroom{
     String emp_id;
     String emp_name;
     int emp_age;
+    int salary;
+    String emp_designation;
+    String mail_id = "Not Provided";
+    String phone_number;
     String emp_department;
 
-
     @Override
-    public void get_details() {
-        System.out.println("ID: "+emp_id);
-        System.out.println("Name: "+emp_name);
-        System.out.println("Age: "+emp_age);
-        System.out.println("Department: "+emp_department);
-        System.out.println("Showroom Name: "+showroom_name);
-
+    protected void get_details() {
+        System.out.println("ID: " + emp_id);
+        System.out.println("Name: " + emp_name);
+        System.out.println("Age: " + emp_age);
+        System.out.println("Salary: " + salary);
+        System.out.println("Designation: " + emp_designation);
+        if(mail_id != "Not Provided")
+            System.out.println("Mail ID: " + mail_id);
+        System.out.println("Phone Number: " + phone_number);
+        if(emp_department == null || emp_department.isEmpty())
+            System.out.println("Department: Not Assigned");
+        else
+            System.out.println("Department: " + emp_department);
+        System.out.println("Department: " + emp_department);
     }
+
     @Override
     public void set_details(){
-        try (Scanner sc = new Scanner(System.in)) {
+        try(Scanner sc = new Scanner(System.in)) {
             UUID uuid = UUID.randomUUID();
             emp_id = String.valueOf(uuid);
             System.out.println("======================= *** ENTER EMPLOYEE DETAILS *** =======================");
             System.out.println();
             System.out.print("EMPLOYEE NAME: ");
             emp_name = sc.nextLine();
+            if(emp_name.isEmpty())
+                throw new IllegalArgumentException("Name field cannot be empty.");
             System.out.print(("EMPLOYEE AGE: "));
             emp_age = sc.nextInt();
+            if(emp_age < 18 || emp_age > 65)
+                throw new IllegalArgumentException("Age must be between 18 and 65.");
             sc.nextLine();
             System.out.print("EMPLOYEE DEPARTMENT: ");
             emp_department = sc.nextLine();
-            System.out.print("SHOWROOM NAME: ");
-            showroom_name = sc.nextLine();
+            if(emp_department.isEmpty())
+                throw new IllegalArgumentException("Department field cannot be empty.");
+            System.out.print("EMPLOYEE DESIGNATION: ");
+            emp_designation = sc.nextLine();
+            System.out.print("EMPLOYEE SALARY: ");
+            salary = sc.nextInt();
+            if(salary < 0)
+                throw new IllegalArgumentException("Salary cannot be negative.");
+            sc.nextLine();
+            System.out.print("EMPLOYEE PHONE NUMBER: ");
+            phone_number = sc.nextLine();
+            if(phone_number.isEmpty())
+                throw new IllegalArgumentException("Phone number field cannot be empty.");
+            else if(!phone_number.matches("\\d{10}"))
+                throw new IllegalArgumentException("Invalid phone number format. Please enter a 10-digit number.");
+            else if(phone_number.length() != 10)
+                throw ("Invalid phone number format. Please enter a 10-digit number.");
+            System.out.print("EMPLOYEE MAIL ID (optional, press enter to skip): ");
+            String input = sc.nextLine();            
         }
+        catch(Exception e) {
+            System.out.println("An error occurred while setting employee details: " + e.getMessage());
+        }
+    }
 
-
+    @Override
+    public String toString() {
+        return "Employee ID: " + emp_id + ", Name: " + emp_name + ", Age: " + emp_age +
+               ", Department: " + emp_department;
     }
 }
