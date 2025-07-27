@@ -5,7 +5,6 @@ interface utility{  //Interface have two methods
     public void set_details();
 }
 
-
 public class Main {
 
     static void main_menu(){
@@ -23,7 +22,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        try (Scanner sc = new Scanner(System.in)) {
+        try(Scanner sc = new Scanner(System.in)) {
             Showroom showroom[] = new Showroom[5];
             Employees employee[] = new Employees[5];
             Cars car[] = new Cars[5];
@@ -32,7 +31,6 @@ public class Main {
             int employees_counter = 0;
             int choice = 100;
             while(choice!=0){
-
                 main_menu();
                 choice = sc.nextInt();
 
@@ -105,7 +103,5 @@ public class Main {
                 }
             }
         }
-
-
     }
 }
