@@ -1,0 +1,4 @@
+NEW SHOWROOM ADDED: Showroom Name: SHARDA AUTOMOBILES PVT. LTD., Address: JVR MALL, BODAKDEV, AHMEDABAD-380015, Manager: KUNAL KAMARIA, Employees: 21, Cars in Stock: 27
+NEW SHOWROOM ADDED: Showroom Name: SHARDA AUTOMOBILES PVT. LTD, Address: JVR MALL, SOLA, AHMEDABAD-380060, Manager: KUNAL BEDI, Employees: 13, Cars in Stock: 14
+NEW SHOWROOM ADDED: Showroom Name: SHARDA AUTOMOBILES, Address: JVR MALL, SOLA, Manager: KUNAL KAMARIA, Employees: 22, Cars in Stock: 12
+NEW SHOWROOM ADDED: Showroom Name: SHARDA AUTOMOBILES, Address: JVR MALL, SOLA, Manager: T. R. SHAH, Employees: 13, Cars in Stock: 11
