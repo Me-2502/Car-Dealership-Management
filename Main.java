@@ -21,8 +21,8 @@ public class Main {
     public static void main(String[] args) throws IOException {
         try(Scanner sc = new Scanner(System.in)) {
             Showroom showroom[] = new Showroom[5];
-            Employees employee[] = new Employees[5];
-            Cars car[] = new Cars[5];
+            Employee employee[] = new Employee[5];
+            Car car[] = new Car[5];
             int car_counter = 0;
             int showroom_counter = 0;
             int employees_counter = 0;
@@ -42,13 +42,13 @@ public class Main {
                         printWriter.println("NEW SHOWROOM ADDED: " + showroom[showroom_counter - 1].toString());
                         break;
                     case 2:
-                        employee[employees_counter] = new Employees();
+                        employee[employees_counter] = new Employee();
                         employee[employees_counter].set_details(sc);
                         employees_counter++;
                         printWriter.println("NEW EMPLOYEE ADDED: " + employee[employees_counter - 1].toString());
                         break;
                     case 3:
-                        car[car_counter] = new Cars();
+                        car[car_counter] = new Car();
                         car[car_counter].set_details(sc);
                         car_counter++;
                         printWriter.println("NEW CAR ADDED: " + car[car_counter - 1].toString());
