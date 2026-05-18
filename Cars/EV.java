@@ -31,7 +31,7 @@ class EV extends Powertrain {
         int battery_capacity = sc.nextInt();
         System.out.print("RANGE(in km): ");
         int range = sc.nextInt();
-        if(range < 50)
+        if(range < 0)
             throw new IllegalArgumentException("Range cannot be negative.");
         sc.nextLine(); // Consume newline
         System.out.print("MOTOR TYPE: ");
@@ -40,12 +40,12 @@ class EV extends Powertrain {
             throw new IllegalArgumentException("Motor type field cannot be empty.");
         System.out.print("POWER(in HP): ");
         int power = sc.nextInt();
-        if(power < 50)
+        if(power < 0)
             throw new IllegalArgumentException("Power cannot be negative.");
         sc.nextLine(); // Consume newline
         System.out.print("TORQUE(in Nm): ");
         int torque = sc.nextInt();
-        if(torque < 50)
+        if(torque < 0)
             throw new IllegalArgumentException("Torque cannot be negative.");
         electric_powertrain = new EV(battery_capacity, range, motor_type, power, torque);
     }

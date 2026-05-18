@@ -1,15 +1,17 @@
 import java.util.Scanner;
+import java.util.List;
 
 public class ShowroomController {
     private List<Showroom> showrooms;
     private UserService userService;
+    private CarService carService;
 
-    public addShowroom(String name, String address, Person owner, Employee manager, int capacity) {
+    public void addShowroom(String name, String address, Person owner, Employee manager, int capacity) {
         Showroom showroom = new Showroom(name, address, owner, manager, capacity);
         showrooms.add(showroom);
     }
 
-    public getShoroomDetails(String showroomId) {
+    public void getShowroomDetails(String showroomId) {
         for(Showroom showroom : showrooms) {
             if(showroom.getId().equals(showroomId)) {
                 System.out.println(showroom);
@@ -20,9 +22,10 @@ public class ShowroomController {
     }
 
     public void addEmployeeToShowroom(String showroomId) {
+        Employee emp = userService.addUser("employee");
         for(Showroom showroom : showrooms) {
             if(showroom.getId().equals(showroomId)) {
-                showroom.addEmployee(employee);
+                showroom.addEmployee(emp);
                 return;
             }
         }
@@ -58,6 +61,4 @@ public class ShowroomController {
         }
         System.out.println("Showroom with ID " + showroomId + " not found.");
     }
-
-    public void 
 }

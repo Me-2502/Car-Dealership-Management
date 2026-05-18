@@ -37,11 +37,11 @@ class ICE extends Powertrain {
             throw new IllegalArgumentException("Engine number field cannot be empty.");
         System.out.print("POWER(in HP): ");
         int power = sc.nextInt();
-        if(power < 50)
+        if(power < 0)
             throw new IllegalArgumentException("Power cannot be negative.");
         System.out.print("TORQUE(in Nm): ");
         int torque = sc.nextInt();
-        if(torque < 50)
+        if(torque < 0)
             throw new IllegalArgumentException("Torque cannot be negative.");
         sc.nextLine(); // Consume newline
         System.out.print("ENGINE NUMBER: ");
