@@ -1,10 +1,10 @@
-import java.util.Scanner;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ShowroomController {
-    private List<Showroom> showrooms;
-    private UserService userService;
-    private CarService carService;
+    private final List<Showroom> showrooms = new ArrayList<>();
+    private final UserController userService = new UserController();
+    private final CarService carService = new CarService();
 
     public void addShowroom(String name, String address, Person owner, Employee manager, int capacity) {
         Showroom showroom = new Showroom(name, address, owner, manager, capacity);
@@ -22,7 +22,12 @@ public class ShowroomController {
     }
 
     public void addEmployeeToShowroom(String showroomId) {
-        Employee emp = userService.addUser("employee");
+        Person created = userService.addUser("employee");
+        if(!(created instanceof Employee)) {
+            System.out.println("Failed to create employee.");
+            return;
+        }
+        Employee emp = (Employee) created;
         for(Showroom showroom : showrooms) {
             if(showroom.getId().equals(showroomId)) {
                 showroom.addEmployee(emp);

@@ -1,4 +1,5 @@
 import java.util.UUID;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Showroom {
@@ -24,26 +25,31 @@ public class Showroom {
         this.totalCarsInStock = 0;
         employees = new ArrayList<>();
         employees.add(manager);
+        carsInStock = new ArrayList<>();
     }
 
-    public void getName() {
-        System.out.println("Showroom Name: " + name);
+    public String getId() {
+        return id;
     }
 
-    public void getOwner() {
-        System.out.println("Owner of " + name + ": " + owner.getName());
+    public String getName() {
+        return name;
     }
 
-    public void getManager() {
-        System.out.println("Manager of " + name + ": " + manager.getName());
+    public Person getOwner() {
+        return owner;
     }
 
-    public void getAddress() {
-        System.out.println("Address of " + name + ": " + address);
+    public Employee getManager() {
+        return manager;
     }
 
-    public void getCapacity() {
-        System.out.println("Capacity of " + name + ": " + capacity);
+    public String getAddress() {
+        return address;
+    }
+
+    public int getCapacity() {
+        return capacity;
     }
 
     public void setName(String name) {
@@ -83,6 +89,7 @@ public class Showroom {
         try {
             if(manager.getType() != EmployeeType.MANAGER)
                 throw new IllegalArgumentException("Employee is not a manager. Cannot assign as showroom manager.");
+            this.manager = manager;
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return;

@@ -1,8 +1,10 @@
 import java.util.Scanner;
 import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CarService {
-    private List<Car> cars;
+    private final List<Car> cars = new ArrayList<>();
 
     public Car addCar() {
         Scanner sc = new Scanner(System.in);
@@ -42,7 +44,7 @@ public class CarService {
             transmission = sc.nextLine();
             if(transmission.isEmpty())
                 throw new IllegalArgumentException("Transmission type field cannot be empty.");
-            total_cars_in_stock++;
+            // Legacy: keep UUID generation if needed later
             String car_id = UUID.randomUUID().toString();
             System.out.println("Enter powertrain type:");
             String powertrain_type = sc.nextLine();
@@ -50,11 +52,9 @@ public class CarService {
             switch(powertrain_type.toUpperCase()) {
                 case "ICE":
                     powertrain = new ICE();
-                    powertrain.set_details(sc);
                     break;
                 case "EV":
                     powertrain = new EV();
-                    powertrain.set_details(sc);
                     break;
                 default:
                     throw new IllegalArgumentException("Invalid powertrain type. Please enter ICE or EV.");
@@ -65,6 +65,7 @@ public class CarService {
         }
         catch(Exception e) {
             System.out.println("An error occurred while setting car details: " + e.getMessage());
+            return null;
         }
     }
 }

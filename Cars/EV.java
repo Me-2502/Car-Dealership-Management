@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 class EV extends Powertrain {
     int battery_capacity;
     int range;
@@ -15,39 +13,13 @@ class EV extends Powertrain {
         this.torque = torque;
     }
 
-    @Override
-    public void get_details() {
-        super.get_details();
-        System.out.println("BATTERY CAPACITY: " + battery_capacity + " kWh");
-        System.out.println("RANGE: " + range + " km");
-        System.out.println("MOTOR TYPE: " + motor_type);
-        System.out.println("POWER: " + power + " HP");
-        System.out.println("TORQUE: " + torque + " Nm");
+    EV() {
+        this(0, 0, "", 0, 0);
     }
 
     @Override
-    public void set_details(Scanner sc) {
-        System.out.print("BATTERY CAPACITY (in kWh): ");
-        int battery_capacity = sc.nextInt();
-        System.out.print("RANGE(in km): ");
-        int range = sc.nextInt();
-        if(range < 0)
-            throw new IllegalArgumentException("Range cannot be negative.");
-        sc.nextLine(); // Consume newline
-        System.out.print("MOTOR TYPE: ");
-        String motor_type = sc.nextLine();
-        if(motor_type.isEmpty())
-            throw new IllegalArgumentException("Motor type field cannot be empty.");
-        System.out.print("POWER(in HP): ");
-        int power = sc.nextInt();
-        if(power < 0)
-            throw new IllegalArgumentException("Power cannot be negative.");
-        sc.nextLine(); // Consume newline
-        System.out.print("TORQUE(in Nm): ");
-        int torque = sc.nextInt();
-        if(torque < 0)
-            throw new IllegalArgumentException("Torque cannot be negative.");
-        electric_powertrain = new EV(battery_capacity, range, motor_type, power, torque);
+    public String describe() {
+        return toString();
     }
 
     public String toString() {

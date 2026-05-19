@@ -33,7 +33,7 @@ public class Customer extends Person {
     }
 
     public String toString() {
-        return "Customer ID: " + id + ", Name: " + name + ", Age: " + cust_age +
+        return "Customer ID: " + id + ", Name: " + name +
         ", Phone Number: " + phoneNumber;
     }
 }

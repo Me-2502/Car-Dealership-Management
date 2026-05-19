@@ -1,8 +1,4 @@
-import java.util.Scanner;
-
-private abstract class Powertrain {
-
-    public abstract void get_details();
-
-    public abstract void set_details(Scanner sc);
+public abstract class Powertrain {
+    // Temporary: keep legacy method names for current app, but remove UI dependencies.
+    public abstract String describe();
 }

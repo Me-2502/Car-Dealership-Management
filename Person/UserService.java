@@ -1,30 +1,35 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class UserController {
-    private List<Employee> employees;
-    private List<Customer> customers;
-    private List<Person> others;
+    private final List<Employee> employees = new ArrayList<>();
+    private final List<Customer> customers = new ArrayList<>();
+    private final List<Person> others = new ArrayList<>();
 
     public Person addUser(String type) {
         Scanner sc = new Scanner(System.in);
+        String name;
+        String phoneNumber;
+        String mail_id;
         try {
             System.out.print("Enter name: ");
-            String name = sc.nextLine();
+            name = sc.nextLine();
             if(name == null || name.trim().isEmpty())
                 throw new IllegalArgumentException("Name cannot be empty.");
             System.out.print("Enter phone number: ");
-            String phoneNumber = sc.nextLine();
+            phoneNumber = sc.nextLine();
             if(phoneNumber == null || phoneNumber.trim().isEmpty())
                 throw new IllegalArgumentException("Phone number cannot be empty.");
             System.out.print("Enter mail ID: ");
-            String mail_id = sc.nextLine();
+            mail_id = sc.nextLine();
             if(mail_id == null || mail_id.trim().isEmpty())
                 throw new IllegalArgumentException("Mail ID cannot be empty.");
         } catch (IllegalArgumentException e) {
             System.out.println("Error: " + e.getMessage());
             return null;
         }
-        switch type.toLowerCase() {
+        switch (type.toLowerCase()) {
             case "employee":
                 try {
                     System.out.print("Enter age: ");
@@ -53,27 +58,40 @@ public class UserController {
                 Customer cust = new Customer(name, phoneNumber, mail_id, new ArrayList<>());
                 customers.add(cust);
                 return cust;
+            default:
+                // Keep legacy behavior: store as generic person-like record.
+                PersonRecord per = new PersonRecord(name, phoneNumber, mail_id);
+                others.add(per);
+                return per;
         }
-        Person per = new Person(name, phoneNumber, mail_id);
-        others.add(per);
-        return per;
     }
 
     public void getUserDetails(String userId) {
-        for(Person user : users) {
-            if(user.getId().equals(userId)) {
-                System.out.println(user);
-                return;
-            }
+        Person user = getUser(userId);
+        if(user == null) {
+            System.out.println("User with ID " + userId + " not found.");
+            return;
         }
-        System.out.println("User with ID " + userId + " not found.");
+        System.out.println(user);
     }
 
     public Person getUser(String userId) {
-        for(Person user : users) {
-            if(user.getId().equals(userId))
-                return user;
+        for(Employee user : employees) {
+            if(user.id.equals(userId)) return user;
+        }
+        for(Customer user : customers) {
+            if(user.id.equals(userId)) return user;
+        }
+        for(Person user : others) {
+            if(user.id.equals(userId)) return user;
         }
         return null;
+    }
+}
+
+// Minimal concrete type for legacy "others" list.
+class PersonRecord extends Person {
+    public PersonRecord(String name, String phoneNumber, String mail_id) {
+        super(name, phoneNumber, mail_id);
     }
 }
