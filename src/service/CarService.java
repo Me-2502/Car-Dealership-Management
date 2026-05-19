@@ -4,6 +4,7 @@ import exception.CarNotFoundException;
 import model.car.Car;
 import model.car.CarStatus;
 import repository.CarRepository;
+import util.AppLogger;
 
 import java.util.List;
 
@@ -15,13 +16,16 @@ public class CarService {
     }
 
     public Car addCar(Car car) {
-        return carRepository.save(car);
+        Car saved = carRepository.save(car);
+        AppLogger.info("CAR_CREATED id=" + saved.getId() + " name=" + saved.getName());
+        return saved;
     }
 
     public boolean removeCar(String id) {
         if(!carRepository.deleteById(id)) {
             throw new CarNotFoundException(id);
         }
+        AppLogger.info("CAR_DELETED id=" + id);
         return true;
     }
 
@@ -43,6 +47,8 @@ public class CarService {
     public Car updateCarStatus(String id, CarStatus status) {
         Car car = getById(id);
         car.setStatus(status);
-        return carRepository.save(car);
+        Car saved = carRepository.save(car);
+        AppLogger.info("CAR_UPDATED id=" + id + " status=" + status);
+        return saved;
     }
 }

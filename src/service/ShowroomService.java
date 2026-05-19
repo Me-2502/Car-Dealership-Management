@@ -8,6 +8,7 @@ import model.user.Manager;
 import model.user.Customer;
 import model.user.Person;
 import repository.ShowroomRepository;
+import util.AppLogger;
 
 import java.util.List;
 
@@ -21,7 +22,9 @@ public class ShowroomService {
     }
 
     public Showroom addShowroom(Showroom showroom) {
-        return showroomRepository.save(showroom);
+        Showroom saved = showroomRepository.save(showroom);
+        AppLogger.info("SHOWROOM_CREATED id=" + saved.getId() + " name=" + saved.getName());
+        return saved;
     }
 
     public List<Showroom> getAll() {
@@ -37,6 +40,7 @@ public class ShowroomService {
         Showroom s = getById(showroomId);
         s.addEmployee(employee);
         showroomRepository.save(s);
+        AppLogger.info("SHOWROOM_EMPLOYEE_ADDED showroomId=" + showroomId + " employeeId=" + employee.getId());
     }
 
     public void removeEmployee(String showroomId, String employeeId) {
@@ -45,12 +49,14 @@ public class ShowroomService {
                 .orElseThrow(() -> new NotFoundException("Employee with id '" + employeeId + "' not found in showroom"));
         s.removeEmployee(emp);
         showroomRepository.save(s);
+        AppLogger.info("SHOWROOM_EMPLOYEE_REMOVED showroomId=" + showroomId + " employeeId=" + employeeId);
     }
 
     public void assignManager(String showroomId, Manager manager) {
         Showroom s = getById(showroomId);
         s.setManager(manager);
         showroomRepository.save(s);
+        AppLogger.info("SHOWROOM_MANAGER_ASSIGNED showroomId=" + showroomId + " managerId=" + manager.getId());
     }
 
     public void sellCar(String showroomId, String carId, Person customerOrBuyer) {
@@ -60,17 +66,20 @@ public class ShowroomService {
                 .orElseThrow(() -> new NotFoundException("Car with id '" + carId + "' not found in showroom"));
         inventoryService.removeStock(s, car);
         showroomRepository.save(s);
+        AppLogger.info("SHOWROOM_CAR_SOLD showroomId=" + showroomId + " carId=" + carId + " buyerId=" + (customerOrBuyer == null ? "null" : customerOrBuyer.getId()));
     }
 
     public void sellCarToCustomer(String showroomId, String carId, Customer customer) {
         sellCar(showroomId, carId, customer);
         customer.addOwnedCarId(carId);
+        AppLogger.info("CUSTOMER_OWNERSHIP_ADDED customerId=" + customer.getId() + " carId=" + carId);
     }
 
     public void addCarToShowroom(String showroomId, Car car) {
         Showroom s = getById(showroomId);
         inventoryService.addStock(s, car);
         showroomRepository.save(s);
+        AppLogger.info("SHOWROOM_CAR_STOCKED showroomId=" + showroomId + " carId=" + car.getId());
     }
 
     public void removeCarFromShowroom(String showroomId, String carId) {
@@ -79,5 +88,6 @@ public class ShowroomService {
                 .orElseThrow(() -> new NotFoundException("Car with id '" + carId + "' not found in showroom"));
         inventoryService.removeStock(s, car);
         showroomRepository.save(s);
+        AppLogger.info("SHOWROOM_CAR_REMOVED showroomId=" + showroomId + " carId=" + carId);
     }
 }
