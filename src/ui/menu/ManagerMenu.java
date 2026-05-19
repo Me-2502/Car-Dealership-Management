@@ -23,6 +23,7 @@ import ui.input.CarInputHandler;
 import ui.input.ConsoleInput;
 import ui.input.ShowroomInputHandler;
 import ui.input.UserInputHandler;
+import util.LogReader;
 
 import java.util.List;
 
@@ -78,6 +79,10 @@ public class ManagerMenu {
                     case 0:
                         System.out.println("Bye.");
                         return;
+
+                    case 98:
+                        viewLogs();
+                        break;
 
                     // Showrooms
                     case 1:
@@ -147,6 +152,7 @@ public class ManagerMenu {
     private void printMenu() {
         System.out.println("=== Manager Console ===");
         System.out.println("0) Exit");
+        System.out.println("98) View logs");
         System.out.println();
 
         System.out.println("-- Showrooms --");
@@ -171,6 +177,13 @@ public class ManagerMenu {
         System.out.println("13) Remove car from showroom stock");
         System.out.println("14) Remove car from catalog");
         System.out.println("15) Remove employee from showroom");
+    }
+
+    private void viewLogs() {
+        int n = in.readInt("How many recent log lines? ");
+        for(String line : LogReader.tail("dealership.log", n)) {
+            System.out.println(line);
+        }
     }
 
     private void createShowroom() {
